@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<manifest>
+    <application name="DownloadControl">
+        <crown name="DownloadControl">
+            <desc>user script</desc>
+            <serves>
+                <event name="OnPictureFilename">
+                    <desc>No description yet...</desc>
+                    <param name="filename" type="string" desc="No description yet..."/>
+                </event>
+                <event name="OnTextFilename">
+                    <desc>No description yet...</desc>
+                    <param name="filename" type="string" desc="No description yet..."/>
+                </event>
+                <function name="getPictureFile">
+                    <desc>No description yet...</desc>
+                    <return name="data" type="binary" desc="No description yet..."/>
+                </function>
+                <function name="getPictureFileDropDownSelection">
+                    <desc>No description yet...</desc>
+                    <return name="selection" type="string" desc="No description yet..."/>
+                </function>
+                <function name="setPictureSelection">
+                    <desc>No description yet...</desc>
+                    <param name="selection" type="string" desc="No description yet..."/>
+                </function>
+                <function name="getTextFile">
+                    <desc>No description yet...</desc>
+                    <return name="data" type="binary" desc="No description yet..."/>
+                </function>
+                <function name="getTextFileDropDownSelection">
+                    <desc>No description yet...</desc>
+                    <return name="selection" type="string" desc="No description yet..."/>
+                </function>
+                <function name="setTextSelection">
+                    <desc>No description yet...</desc>
+                    <param name="selection" type="string" desc="No description yet..."/>
+                </function>
+            </serves>
+        </crown>
+        <meta key="author">AppSpace Sample</meta>
+        <meta key="version">2.5.0</meta>
+        <meta key="licensed">false</meta>
+        <meta key="priority">low</meta>
+        <meta key="copy-protected">false</meta>
+        <meta key="read-protected">false</meta>
+        <entry path="pages" default="page.msdd">
+            <file type="application/zip">page.msdd</file>
+        </entry>
+        <entry path="resources">
+            <file type="image">Pictures/Chrysanthemum.jpg</file>
+            <file type="image">Pictures/CompactnessArea.bmp</file>
+            <file type="image">Pictures/ConvexHull.bmp</file>
+            <file type="image">Pictures/Koala.jpg</file>
+            <file type="image">Pictures/sensor.png</file>
+            <file type="text/plain">Textfiles/Hello.txt</file>
+            <file type="text/plain">Textfiles/Huhu.txt</file>
+        </entry>
+        <entry path="scripts" default="DownloadControl.lua">
+            <file type="text/x-lua">DownloadControl.lua</file>
+        </entry>
+    </application>
+</manifest>
