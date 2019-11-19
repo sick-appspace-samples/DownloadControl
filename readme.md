@@ -1,6 +1,8 @@
 ## DownloadControl
 Using the Download Control available as a UI-Builder Control Package.
 ### Description
+**Deprecated**
+
 The sample provides "Download"functionality for certain files
 (e.g. text- or image-files) via the HMI (web-page). The Download Control is a
 button upon which a specified file can be downloaded from within the UI.
