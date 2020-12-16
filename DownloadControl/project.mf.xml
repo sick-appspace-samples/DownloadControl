@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <manifest>
     <application name="DownloadControl">
         <crown name="DownloadControl">
@@ -6,58 +6,57 @@
             <serves>
                 <event name="OnPictureFilename">
                     <desc>No description yet...</desc>
-                    <param name="filename" type="string" desc="No description yet..."/>
+                    <param desc="No description yet..." name="filename" type="string"/>
                 </event>
                 <event name="OnTextFilename">
                     <desc>No description yet...</desc>
-                    <param name="filename" type="string" desc="No description yet..."/>
+                    <param desc="No description yet..." name="filename" type="string"/>
                 </event>
-                <function name="getPictureFile">
-                    <desc>No description yet...</desc>
-                    <return name="data" type="binary" desc="No description yet..."/>
-                </function>
+                <event name="OnPictureFullPath">
+                    <param desc="" multiplicity="1" name="path" type="string"/>
+                </event>
+                <event name="OnTextFullPath">
+                    <param desc="" multiplicity="1" name="path" type="string"/>
+                </event>
                 <function name="getPictureFileDropDownSelection">
                     <desc>No description yet...</desc>
-                    <return name="selection" type="string" desc="No description yet..."/>
+                    <return desc="No description yet..." multiplicity="+" name="selection" type="string"/>
                 </function>
-                <function name="setPictureSelection">
+                <function name="setPictureFilename">
                     <desc>No description yet...</desc>
-                    <param name="selection" type="string" desc="No description yet..."/>
-                </function>
-                <function name="getTextFile">
-                    <desc>No description yet...</desc>
-                    <return name="data" type="binary" desc="No description yet..."/>
+                    <param desc="No description yet..." name="selection" type="string"/>
                 </function>
                 <function name="getTextFileDropDownSelection">
                     <desc>No description yet...</desc>
-                    <return name="selection" type="string" desc="No description yet..."/>
+                    <return desc="No description yet..." multiplicity="+" name="selection" type="string"/>
                 </function>
-                <function name="setTextSelection">
+                <function name="setTextFilename">
                     <desc>No description yet...</desc>
-                    <param name="selection" type="string" desc="No description yet..."/>
+                    <param desc="No description yet..." name="selection" type="string"/>
+                </function>
+                <function name="getTextFilename">
+                    <desc/>
+                    <return desc="" multiplicity="1" name="selection" type="string"/>
+                </function>
+                <function name="getTextFullPath">
+                    <desc/>
+                    <return desc="" multiplicity="1" name="path" type="string"/>
+                </function>
+                <function name="getPictureFilename">
+                    <desc/>
+                    <return desc="" multiplicity="1" name="selection" type="string"/>
+                </function>
+                <function name="getPictureFullPath">
+                    <desc/>
+                    <return desc="" multiplicity="1" name="path" type="string"/>
                 </function>
             </serves>
         </crown>
         <meta key="author">AppSpace Sample</meta>
         <meta key="version">2.5.0</meta>
-        <meta key="licensed">false</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
-        <entry path="pages" default="page.msdd">
-            <file type="application/zip">page.msdd</file>
-        </entry>
-        <entry path="resources">
-            <file type="image">Pictures/Chrysanthemum.jpg</file>
-            <file type="image">Pictures/CompactnessArea.bmp</file>
-            <file type="image">Pictures/ConvexHull.bmp</file>
-            <file type="image">Pictures/Koala.jpg</file>
-            <file type="image">Pictures/sensor.png</file>
-            <file type="text/plain">Textfiles/Hello.txt</file>
-            <file type="text/plain">Textfiles/Huhu.txt</file>
-        </entry>
-        <entry path="scripts" default="DownloadControl.lua">
-            <file type="text/x-lua">DownloadControl.lua</file>
-        </entry>
+        <entry default="DownloadControl.lua" path="scripts"/>
     </application>
 </manifest>

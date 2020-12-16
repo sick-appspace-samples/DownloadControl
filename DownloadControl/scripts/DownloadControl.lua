@@ -28,27 +28,6 @@
   tutorial
 ------------------------------------------------------------------------------]]
 
--- luacheck: globals gGetPictureFile gGetPictureFileDropDownSelection gSetPictureSelection gOnPictureFilename
--- luacheck: globals gGetTextFileDropDownSelection gSetTextSelection gGetTextFile
-
----------------------------
---SERVE FUNCTIONS / EVENTS
----------------------------
-
--- Serves for the Picture selection
-Script.serveFunction( 'DownloadControl.getPictureFile', 'gGetPictureFile', '', 'binary' )
-Script.serveFunction( 'DownloadControl.getPictureFileDropDownSelection',
-                      'gGetPictureFileDropDownSelection', '', 'string' )
-Script.serveFunction( 'DownloadControl.setPictureSelection', 'gSetPictureSelection', 'string' )
-
-Script.serveEvent( 'DownloadControl.OnPictureFilename', 'gOnPictureFilename', 'string' )
-
--- Serves for the Text File selection
-Script.serveFunction('DownloadControl.getTextFile', 'gGetTextFile', '', 'binary')
-Script.serveFunction( 'DownloadControl.getTextFileDropDownSelection', 'gGetTextFileDropDownSelection', '', 'string' )
-Script.serveFunction( 'DownloadControl.setTextSelection', 'gSetTextSelection', 'string' )
-Script.serveEvent('DownloadControl.OnTextFilename', 'OnTextFilename', 'string')
-
 -------------------------------------------------------------
 --LOCAL CONSTANTS / VARIABLES
 -------------------------------------------------------------
@@ -56,8 +35,31 @@ Script.serveEvent('DownloadControl.OnTextFilename', 'OnTextFilename', 'string')
 local currPictureFilename = ''
 local currTextFilename = ''
 
-local DIR_PICTURES = 'resources/Pictures/'
-local DIR_TEXTFILES = 'resources/Textfiles/'
+local ORIG_DIR_PICTURES = 'resources/Pictures/'
+local ORIG_DIR_TEXTFILES = 'resources/Textfiles/'
+local DIR_PICTURES = '/ram/Pictures/'
+local DIR_TEXTFILES = '/ram/Textfiles/'
+
+
+---------------------------
+--RAM SETUP
+---------------------------
+
+if File.exists(DIR_PICTURES) then
+  for _, f in pairs(File.list(DIR_PICTURES)) do
+    File.del(DIR_PICTURES..f)
+  end
+else
+  File.mkdir(DIR_PICTURES)
+end
+
+if File.exists(DIR_TEXTFILES) then
+  for _, f in pairs(File.list(DIR_TEXTFILES)) do
+    File.del(DIR_TEXTFILES..f)
+  end
+else
+  File.mkdir(DIR_TEXTFILES)
+end
 
 ---------------------------
 --FUNCTIONS
@@ -67,84 +69,104 @@ local DIR_TEXTFILES = 'resources/Textfiles/'
 --binding: picture files
 -----------------------------------------
 
-function gSetPictureSelection(filename)
+local function setPictureFilename(filename)
   currPictureFilename = filename
+  for _, f in pairs(File.list(DIR_PICTURES)) do
+    File.del(DIR_PICTURES..f)
+  end
+  File.copy(ORIG_DIR_PICTURES..currPictureFilename, DIR_PICTURES..currPictureFilename)
+  Script.notifyEvent("OnPictureFilename", currPictureFilename)
+  Script.notifyEvent("OnPictureFullPath", DIR_PICTURES .. currPictureFilename)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function gGetPictureFileDropDownSelection()
-  local list = File.list(DIR_PICTURES)
 
-  local jsonStr = '['
+--@getPictureFilename():string
+local function getPictureFilename()
+  return currPictureFilename
+end
 
-  for _, v in pairs(list) do
-    jsonStr = jsonStr .. '{"label":"' .. v .. '","value":"' .. v .. '"},'
-  end
+------------------------------------------------------------------------------------------------------------------------
 
-  jsonStr = jsonStr:sub(1, -2) --delete last comma
-  jsonStr = jsonStr .. ']'
+
+--@getPictureFullPath():
+local function getPictureFullPath()
+  return (currPictureFilename ~= '' and DIR_PICTURES .. currPictureFilename) or ''
+end
+
+------------------------------------------------------------------------------------------------------------------------
+
+local function getPictureFileDropDownSelection()
+  local list = File.list(ORIG_DIR_PICTURES)
 
   --Ensures that the first file, shown in the drop down menu, is preselected
-  gSetPictureSelection(list[1])
-
-  return jsonStr
-end
-
-------------------------------------------------------------------------------------------------------------------------
-
-function gGetPictureFile()
-  Script.notifyEvent('gOnPictureFilename', currPictureFilename) --file name as it downloaded
-
-  local completeFileName = DIR_PICTURES .. currPictureFilename
-
-  local filehandle = File.open(completeFileName, 'rb') -- we has to use "binary" mode for image files
-
-  local data = File.read(filehandle)
-
-  File.close(filehandle)
-
-  return data
+  if (currPictureFilename == '' ) then
+    setPictureFilename(list[1])
+  end
+  return list
 end
 
 -----------------------------------------
 --binding: text files
 -----------------------------------------
 
-function gSetTextSelection(filename)
+local function setTextFilename(filename)
   currTextFilename = filename
+  for _, f in pairs(File.list(DIR_TEXTFILES)) do
+    File.del(DIR_TEXTFILES..f)
+  end
+  File.copy(ORIG_DIR_TEXTFILES..currTextFilename, DIR_TEXTFILES..currTextFilename)
+  Script.notifyEvent("OnTextFilename", currTextFilename)
+  Script.notifyEvent("OnTextFullPath", DIR_TEXTFILES .. currTextFilename)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function gGetTextFileDropDownSelection()
-  local list = File.list(DIR_TEXTFILES)
+--@getTextFilename():string
+local function getTextFilename()
+  return currTextFilename
+end
 
-  local jsonStr = '['
+------------------------------------------------------------------------------------------------------------------------
 
-  for _, v in pairs(list) do
-    jsonStr = jsonStr .. '{"label":"' .. v .. '","value":"' .. v .. '"},'
-  end
+--@getTextFullPath():
+local function getTextFullPath()
+  return (currTextFilename ~= '' and DIR_TEXTFILES .. currTextFilename) or ''
+end
 
-  jsonStr = jsonStr:sub(1, -2) --delete last comma
-  jsonStr = jsonStr .. ']'
+------------------------------------------------------------------------------------------------------------------------
+
+local function getTextFileDropDownSelection()
+  local list = File.list(ORIG_DIR_TEXTFILES)
 
   --Ensures that the first file, shown in the drop down menu, is preselected
-  gSetTextSelection(list[1])
-
-  return jsonStr
+  if (currTextFilename == '' ) then
+    setTextFilename(list[1])
+  end
+  return list
 end
 
-------------------------------------------------------------------------------------------------------------------------
 
-function gGetTextFile()
-  Script.notifyEvent('OnTextFilename', currTextFilename) --file name as downloaded
-  local completeFileName = DIR_TEXTFILES .. currTextFilename
 
-  local filehandle = File.open(completeFileName, 'r')
-  local data = File.read(filehandle)
+---------------------------
+--SERVE FUNCTIONS / EVENTS
+---------------------------
 
-  File.close(filehandle)
+-- Serves for the Picture selection
+Script.serveFunction( 'DownloadControl.getPictureFileDropDownSelection',getPictureFileDropDownSelection)
+Script.serveFunction( 'DownloadControl.setPictureFilename', setPictureFilename)
+Script.serveFunction("DownloadControl.getPictureFilename", getPictureFilename)
+Script.serveFunction("DownloadControl.getPictureFullPath", getPictureFullPath)
+Script.serveEvent( 'DownloadControl.OnPictureFilename', 'OnPictureFilename')
+Script.serveEvent("DownloadControl.OnPictureFullPath", "OnPictureFullPath")
 
-  return data
-end
+
+-- Serves for the Text File selection
+Script.serveFunction( 'DownloadControl.getTextFileDropDownSelection', getTextFileDropDownSelection)
+Script.serveFunction( 'DownloadControl.setTextFilename', setTextFilename)
+Script.serveFunction("DownloadControl.getTextFilename", getTextFilename)
+Script.serveFunction("DownloadControl.getTextFullPath", getTextFullPath)
+Script.serveEvent('DownloadControl.OnTextFilename', 'OnTextFilename')
+Script.serveEvent("DownloadControl.OnTextFullPath", "OnTextFullPath")
+

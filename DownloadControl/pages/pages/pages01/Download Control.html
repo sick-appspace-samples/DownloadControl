@@ -1,0 +1,38 @@
+<layout-row id="RowLayout1">
+	
+		
+		
+		
+		
+		
+	<layout-column id="ColumnLayout1">
+		<davinci-drop-down id="DropDown1" label="Pictures">
+			<crown-binding property="data" name="DownloadControl/getPictureFileDropDownSelection" path="result/data/selection" auto-update="0" update-on-resume></crown-binding>
+			<crown-edpws-binding property="value" name="DownloadControl/OnPictureFilename" update-on-resume></crown-edpws-binding>
+			<crown-binding event="change" name="DownloadControl/setPictureFilename" path="param/args/selection" auto-commit></crown-binding>
+			<crown-binding property="value" name="DownloadControl/getPictureFilename" path="result/data/selection" auto-update="0" update-on-resume></crown-binding>
+	</davinci-drop-down>
+		<appspace-file-download-button id="FileDownloadButton1">
+			<crown-edpws-binding property="filePath" name="DownloadControl/OnPictureFullPath" update-on-resume></crown-edpws-binding>
+			<crown-edpws-binding property="downloadedFilename" name="DownloadControl/OnPictureFilename" update-on-resume></crown-edpws-binding>
+			<crown-binding property="filePath" name="DownloadControl/getPictureFullPath" path="result/data/path" auto-update="0" update-on-resume></crown-binding>
+			<crown-binding property="downloadedFilename" name="DownloadControl/getPictureFilename" path="result/data/selection" auto-update="0" update-on-resume></crown-binding>
+		Download</appspace-file-download-button>
+	</layout-column>
+	<layout-column id="ColumnLayout2">
+		<davinci-drop-down id="DropDown2" label="Text files">
+			<crown-binding property="data" name="DownloadControl/getTextFileDropDownSelection" path="result/data/selection" auto-update="0" update-on-resume></crown-binding>
+			<crown-edpws-binding property="value" name="DownloadControl/OnTextFilename" update-on-resume></crown-edpws-binding>
+			<crown-binding event="change" name="DownloadControl/setTextFilename" path="param/args/selection" auto-commit></crown-binding>
+      <crown-binding property="value" name="DownloadControl/getTextFilename" path="result/data/selection" auto-update="0" update-on-resume></crown-binding>
+	</davinci-drop-down>
+		<appspace-file-download-button id="FileDownloadButton2">
+			<crown-edpws-binding property="filePath" name="DownloadControl/OnTextFullPath" update-on-resume></crown-edpws-binding>
+			<crown-edpws-binding property="downloadedFilename" name="DownloadControl/OnTextFilename" update-on-resume></crown-edpws-binding>
+      <crown-binding property="filePath" name="DownloadControl/getTextFullPath" path="result/data/path" auto-update="0" update-on-resume></crown-binding>
+			<crown-binding property="downloadedFilename" name="DownloadControl/getTextFilename" path="result/data/selection" auto-update="0" update-on-resume></crown-binding>
+		Download</appspace-file-download-button>
+	</layout-column>
+	
+  
+</layout-row>
