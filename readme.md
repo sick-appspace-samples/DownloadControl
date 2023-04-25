@@ -1,4 +1,5 @@
 ## DownloadControl
+
 Using the Download Control available as a UI-Builder Control Package.
 
 ### Description
@@ -12,6 +13,7 @@ within the UI-Builder. The package itself can be found at the support portal or
 can be extracted from this Apps msdd.
 
 ### How to Run
+
 Starting the App and opening the device web-page. There it can be chosen which file
 (picture- or text file) should be downloaded (via Drop-down menu = standard control).
 After clicking on the "Download"-button, the chosen file will be downloaded.
@@ -19,4 +21,5 @@ The available sample files for download are stored in the "resources" directory/
 of this App
 
 ### Topics
-System, User-Interface, Sample, SICK-AppSpace
+
+system, user-interface, sample, sick-appspace
