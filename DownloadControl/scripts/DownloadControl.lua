@@ -52,7 +52,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 
---@getPictureFilename():string
+---@return string currPictureFilename
 local function getPictureFilename()
   return currPictureFilename
 end
@@ -60,13 +60,14 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 
---@getPictureFullPath():
+---@return string
 local function getPictureFullPath()
   return (currPictureFilename ~= '' and DIR_PICTURES .. currPictureFilename) or ''
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 
+---@return string[] list
 local function getPictureFileDropDownSelection()
   local list = File.list(ORIG_DIR_PICTURES)
 
@@ -93,20 +94,21 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
---@getTextFilename():string
+---@return string currTextFilename
 local function getTextFilename()
   return currTextFilename
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 
---@getTextFullPath():
+---@return string
 local function getTextFullPath()
   return (currTextFilename ~= '' and DIR_TEXTFILES .. currTextFilename) or ''
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 
+---@return string[] list
 local function getTextFileDropDownSelection()
   local list = File.list(ORIG_DIR_TEXTFILES)
 
